@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+data/
+models/
+*.wav
+*.webm
+*.ogg
+*.m4a
+*.mp3
+.birdnet/
+.DS_Store
+.pytest_cache/
+.ruff_cache/
+uv.lock

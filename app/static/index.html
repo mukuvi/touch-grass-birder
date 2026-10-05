@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1f5f3a" />
+  <title>Touch Grass Birder</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div>
+        <h1>Touch Grass Birder</h1>
+        <p class="tagline" id="modelTag">loading models…</p>
+      </div>
+    </div>
+    <span class="net" id="netBadge">offline-ready</span>
+  </header>
+
+  <main>
+    <section class="recorder card">
+      <button id="recordBtn" class="record" aria-label="Record a bird call">
+        <span class="dot"></span>
+        <span id="recordLabel">Listen</span>
+      </button>
+      <p class="hint" id="status">Tap Listen and point your phone at the call.</p>
+      <label class="upload">
+        or <input type="file" id="fileInput" accept="audio/*" hidden /><button type="button" id="fileBtn">use an audio file</button>
+      </label>
+    </section>
+
+    <section id="results" class="results" hidden>
+      <h2>Hear anything?</h2>
+      <div id="detections"></div>
+    </section>
+
+    <section class="card sightings">
+      <div class="row">
+        <h2>Field log</h2>
+        <span id="sightingCount" class="pill">0</span>
+      </div>
+      <ul id="sightingList" class="log"></ul>
+    </section>
+
+    <footer>
+      <p>Runs fully on-device: <strong>BirdNET</strong> (open acoustic model) + <strong>Gemma</strong> (open-weight, local). No audio leaves this machine.</p>
+    </footer>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

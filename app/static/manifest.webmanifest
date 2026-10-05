@@ -1,0 +1,10 @@
+{
+  "name": "Touch Grass Birder",
+  "short_name": "Birder",
+  "description": "Offline-first bird call identifier using open-source AI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f2ea",
+  "theme_color": "#1f5f3a",
+  "icons": []
+}
