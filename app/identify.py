@@ -10,7 +10,7 @@ from .config import DEFAULT_MIN_CONF
 
 _lock = threading.Lock()
 _model: Any | None = None
-_model_label = "acoustic/3.0/onnx"
+_model_label = "acoustic/2.4/litert"
 
 
 def is_loaded() -> bool:
@@ -24,7 +24,7 @@ def load_model() -> Any:
             if _model is None:
                 import birdnet
 
-                _model = birdnet.load("acoustic", "3.0", "onnx")
+                _model = birdnet.load("acoustic", "2.4", "tf", library="litert")
     return _model
 
 
