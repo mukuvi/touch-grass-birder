@@ -22,7 +22,9 @@ No API key. No audio upload. No network round trip.
 
 <!-- TODO: drop the live Render URL here once deployed, plus a short GIF/video of a real identification -->
 
-Live demo: [RENDER_URL]
+Live demo: https://touch-grass-birder.onrender.com
+
+The hosted demo runs BirdNET, so you can point it at a recording right now. Gemma field notes are generated when you run it on your own machine (a free Render instance is too small for the 0.8 GB model) — `make models && make run`.
 
 ## Code
 
