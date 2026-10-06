@@ -54,6 +54,10 @@ Current: 6/24. Milestone 2 = 10 (bonus holographic sticker).
 6. Create DEV draft (`published: false`), fill demo URL, publish after user OK.
 7. Verify tags (always `hf26challenge`), live demo, MIT repo link, prize categories.
 
+## Hack Day Nairobi (Oct 30)
+
+Full plan: `docs/hackday-nairobi-plan.md`. Two challenges to enter (Gemma 4 + Best Open-Source AI Project). Capstone = add Gemma 4 photo-ID to Touch Grass Birder.
+
 ## Week 1 artifacts
 
 - Post: https://dev.to/mukuvi/touch-grass-birder-a-bird-call-identifier-that-works-with-no-signal-1hnp
