@@ -16,7 +16,7 @@ Current: 6/24. Milestone 2 = 10 (bonus holographic sticker).
 | 5 | Install + log in to DevRelay | done | Oct 5 |
 | 6 | Connect DigitalOcean | done | Oct 5 |
 | 7 | Pre-event survey | done | |
-| 8 | Join MLH Community Discord | TODO (me) | link on hacktoberfest.com/my |
+| 8 | Join MLH Community Discord | TODO (you: 1 click) | https://discord.mlh.io → link to MyMLH |
 | 9 | Check into a livestream | TODO | see schedule below |
 | 10 | Check into 3 livestreams | TODO | |
 | 11 | GHW register (GHW: Hacktoberfest) | REGISTERED | Oct 9–15 |
