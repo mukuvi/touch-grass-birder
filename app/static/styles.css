@@ -86,6 +86,7 @@ main { max-width: 640px; margin: 0 auto; padding: 1rem; }
 
 .hint { color: var(--muted); font-size: 0.85rem; min-height: 1.2em; }
 .upload { font-size: 0.8rem; color: var(--muted); }
+.upload.photo { display: block; margin-top: 0.4rem; }
 .upload button {
   background: none; border: none; color: var(--green-soft);
   text-decoration: underline; cursor: pointer; font: inherit;

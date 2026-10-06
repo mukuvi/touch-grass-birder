@@ -12,12 +12,14 @@ def test_health_shape():
     assert body["ok"] is True
     assert "birdnet_loaded" in body
     assert "gemma_available" in body
+    assert "gemma4_available" in body
 
 
 def test_index_served():
     res = client.get("/")
     assert res.status_code == 200
     assert "Touch Grass Birder" in res.text
+    assert "snap a bird photo" in res.text
 
 
 def test_sightings_roundtrip(tmp_path, monkeypatch):

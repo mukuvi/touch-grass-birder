@@ -8,6 +8,8 @@ const els = {
   detections: document.getElementById("detections"),
   fileInput: document.getElementById("fileInput"),
   fileBtn: document.getElementById("fileBtn"),
+  photoInput: document.getElementById("photoInput"),
+  photoBtn: document.getElementById("photoBtn"),
   netBadge: document.getElementById("netBadge"),
   modelTag: document.getElementById("modelTag"),
   sightingList: document.getElementById("sightingList"),
@@ -199,6 +201,46 @@ els.fileInput.addEventListener("change", async () => {
   if (!file) return;
   const wav = file.type === "audio/wav" ? file : await toWavBlob(file);
   sendForId(wav);
+});
+
+async function sendForVision(file) {
+  setStatus("Identifying by photo");
+  els.results.hidden = true;
+  const form = new FormData();
+  form.append("image", file);
+  try {
+    const res = await fetch("/api/vision", { method: "POST", body: form });
+    if (!res.ok) throw new Error(await res.text());
+    renderVision(await res.json());
+  } catch (err) {
+    setStatus("Could not identify that photo.");
+    console.error(err);
+  }
+}
+
+function renderVision(data) {
+  if (!data.configured) {
+    setStatus("Photo ID is not configured on this instance.");
+    return;
+  }
+  setStatus(`Photo ID via ${data.model}`);
+  const species = data.species ? escapeHtml(data.species) : "Unsure";
+  els.detections.innerHTML = `<article class="det">
+    <div class="det-head">
+      <strong>${species}</strong>
+    </div>
+    ${data.note ? `<p class="note">${escapeHtml(data.note)}</p>` : ""}
+    <button class="save" data-name="${escapeAttr(data.species || "Unknown bird")}" data-sci="" data-conf="0">Log sighting</button>
+  </article>`;
+  els.results.hidden = false;
+  els.detections.querySelector(".save").addEventListener("click", (btn) => saveSighting(btn.currentTarget));
+}
+
+els.photoBtn.addEventListener("click", () => els.photoInput.click());
+els.photoInput.addEventListener("change", async () => {
+  const file = els.photoInput.files[0];
+  if (!file) return;
+  sendForVision(file);
 });
 
 function updateNet() {

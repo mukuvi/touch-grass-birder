@@ -20,6 +20,10 @@ LLAMA_THREADS = int(os.environ.get("LLAMA_THREADS", str(os.cpu_count() or 4)))
 
 DEFAULT_MIN_CONF = float(os.environ.get("MIN_CONF", "0.25"))
 
+GEMMA4_API_KEY = os.environ.get("GEMMA4_API_KEY") or os.environ.get("GEMINI_API_KEY") or None
+GEMMA4_MODEL = os.environ.get("GEMMA4_MODEL", "")
+GEMMA4_TIMEOUT = int(os.environ.get("GEMMA4_TIMEOUT", "120"))
+
 BIRDNET_LAT = os.environ.get("BIRDNET_LAT")
 BIRDNET_LON = os.environ.get("BIRDNET_LON")
 

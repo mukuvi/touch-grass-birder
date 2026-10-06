@@ -8,8 +8,9 @@ from pathlib import Path
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from httpx import HTTPError
 
-from . import config, fieldnotes, identify, sightings
+from . import config, fieldnotes, identify, sightings, vision
 
 app = FastAPI(title="Touch Grass Birder", version="0.1.0")
 
@@ -36,6 +37,8 @@ def health() -> dict:
         "birdnet_loaded": identify.is_loaded(),
         "gemma_available": fieldnotes.gemma_available(),
         "gemma_model": fieldnotes.model_name(),
+        "gemma4_available": vision.available(),
+        "gemma4_model": vision.model_name(),
         "offline": True,
     }
 
@@ -68,6 +71,24 @@ def api_identify(
         )
 
     return result
+
+
+@app.post("/api/vision")
+def api_vision(image: UploadFile = File(...)) -> dict:
+    suffix = Path(image.filename or "photo.jpg").suffix or ".jpg"
+    upload_path = config.UPLOAD_DIR / f"{uuid.uuid4().hex}{suffix}"
+    with upload_path.open("wb") as fh:
+        shutil.copyfileobj(image.file, fh)
+
+    try:
+        return vision.identify_image(upload_path)
+    except HTTPError as exc:
+        raise HTTPException(status_code=502, detail=f"Gemma 4 request failed: {exc}")
+    finally:
+        try:
+            upload_path.unlink()
+        except OSError:
+            pass
 
 
 @app.get("/api/sightings")
