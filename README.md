@@ -58,6 +58,15 @@ make run
 That downloads Gemma 3 1B (Q4_K_M, about 0.8 GB) into ./models. Without it the
 app still identifies birds and just skips the note.
 
+## Photo ID
+
+With `GEMMA4_API_KEY` and `GEMMA4_MODEL` set, the photo tile identifies a bird
+from an image:
+
+```bash
+curl -F "image=@bird.jpg" http://127.0.0.1:8000/api/vision
+```
+
 ## API
 
 | Method | Path             | Purpose                        |

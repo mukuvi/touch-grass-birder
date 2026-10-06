@@ -11,3 +11,7 @@ services:
         value: 3.12.14
       - key: MIN_CONF
         value: "0.25"
+      - key: GEMMA4_MODEL
+        value: ""
+      - key: GEMMA4_API_KEY
+        sync: false

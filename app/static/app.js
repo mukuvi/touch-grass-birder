@@ -20,6 +20,7 @@ let recording = false;
 let mediaRecorder = null;
 let chunks = [];
 let timer = null;
+let visionBusy = false;
 
 function setStatus(text) {
   els.status.textContent = text;
@@ -204,6 +205,10 @@ els.fileInput.addEventListener("change", async () => {
 });
 
 async function sendForVision(file) {
+  if (visionBusy) return;
+  visionBusy = true;
+  els.photoBtn.disabled = true;
+  const preview = URL.createObjectURL(file);
   setStatus("Identifying by photo");
   els.results.hidden = true;
   const form = new FormData();
@@ -211,21 +216,26 @@ async function sendForVision(file) {
   try {
     const res = await fetch("/api/vision", { method: "POST", body: form });
     if (!res.ok) throw new Error(await res.text());
-    renderVision(await res.json());
+    renderVision(await res.json(), preview);
   } catch (err) {
     setStatus("Could not identify that photo.");
     console.error(err);
+  } finally {
+    visionBusy = false;
+    els.photoBtn.disabled = false;
   }
 }
 
-function renderVision(data) {
+function renderVision(data, previewUrl) {
   if (!data.configured) {
     setStatus("Photo ID is not configured on this instance.");
     return;
   }
   setStatus(`Photo ID via ${data.model}`);
   const species = data.species ? escapeHtml(data.species) : "Unsure";
+  const img = previewUrl ? `<img class="photo-preview" src="${previewUrl}" alt="your photo" />` : "";
   els.detections.innerHTML = `<article class="det">
+    ${img}
     <div class="det-head">
       <strong>${species}</strong>
     </div>
@@ -256,7 +266,9 @@ async function boot() {
   try {
     const res = await fetch("/api/health");
     const h = await res.json();
-    els.modelTag.textContent = `BirdNET ready, Gemma ${h.gemma_available ? "ready" : "off"}`;
+    let tag = `BirdNET ready, Gemma ${h.gemma_available ? "ready" : "off"}`;
+    if (h.gemma4_available) tag += `, Gemma 4 ready`;
+    els.modelTag.textContent = tag;
   } catch {
     els.modelTag.textContent = "server not reachable";
   }
