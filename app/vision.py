@@ -74,7 +74,7 @@ def identify_image(image_path: str | Path) -> dict[str, Any]:
 
     resp = httpx.post(
         _API_URL.format(model=config.GEMMA4_MODEL),
-        params={"key": config.GEMMA4_API_KEY},
+        headers={"x-goog-api-key": config.GEMMA4_API_KEY},
         json=payload,
         timeout=config.GEMMA4_TIMEOUT,
     )

@@ -13,10 +13,12 @@ Everything runs locally.
   runs through ONNX Runtime.
 - Gemma 3 1B, an open weight model, runs through llama.cpp for short field
   notes.
+- Gemma 4, a lightweight multimodal open model, can identify birds from a photo
+  via the Gemini API when a key is configured (optional; audio never needs it).
 
-No API key, no upload, no network. A closed bird ID API needs a round trip, and
-on a trail there is no round trip. Running locally also means the location of a
-rare sighting never leaves the device.
+No API key, no upload, no network for audio. A closed bird ID API needs a round
+trip, and on a trail there is no round trip. Running locally also means the
+location of a rare sighting never leaves the device.
 
 ## Architecture
 
@@ -62,6 +64,7 @@ app still identifies birds and just skips the note.
 | ------ | ---------------- | ------------------------------ |
 | GET    | /api/health      | Model status                   |
 | POST   | /api/identify    | Multipart audio to detections  |
+| POST   | /api/vision      | Multipart image to a Gemma 4 field note |
 | GET    | /api/sightings   | Field log                      |
 | POST   | /api/sightings   | Save a sighting                |
 
@@ -69,6 +72,19 @@ app still identifies birds and just skips the note.
 
 Set these environment variables to override defaults: `LLAMA_BIN`, `GEMMA_MODEL`,
 `MIN_CONF`, `LLAMA_THREADS`, `BIRDER_DATA_DIR`.
+
+Photo ID (Gemma 4): set `GEMMA4_API_KEY` (or `GEMINI_API_KEY`) and `GEMMA4_MODEL`
+to the Gemma 4 model id from the Gemma quickstart. Without them the app still
+identifies audio and the photo tile reports "not configured".
+
+## Security
+
+- API keys are read from the environment only and are never committed. Add keys
+  in the Render dashboard, not in `render.yaml`.
+- The Gemma 4 key is sent as the `x-goog-api-key` header, never in the URL.
+- Uploaded audio and images are written under `data/uploads/` with randomized
+  names and deleted after every request.
+- Browser-rendered model output (notes, species names) is HTML-escaped.
 
 ## Tests
 

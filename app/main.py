@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import shutil
 import subprocess
 import uuid
@@ -83,7 +84,8 @@ def api_vision(image: UploadFile = File(...)) -> dict:
     try:
         return vision.identify_image(upload_path)
     except HTTPError as exc:
-        raise HTTPException(status_code=502, detail=f"Gemma 4 request failed: {exc}")
+        logging.getLogger(__name__).warning("Gemma 4 request failed: %s", exc)
+        raise HTTPException(status_code=502, detail="Gemma 4 request failed") from exc
     finally:
         try:
             upload_path.unlink()
