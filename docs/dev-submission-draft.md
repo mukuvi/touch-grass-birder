@@ -74,7 +74,7 @@ The open pieces are not a compromise here. They are the feature. The offline, pr
 
 I built this with an agent, and the session is saved so you can see the process:
 
-{% agent_session SESSION_SLUG %}
+{% agent_session building-touch-grass-birder-for-the-hf26-week-1-challenge-gb3nc0 %}
 
 ## Prize Categories
 
